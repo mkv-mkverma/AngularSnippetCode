@@ -1,0 +1,264 @@
+<h1>Structural Directives</h1>
+
+<p>Conditional display of hero</p>
+
+<blockquote>
+  <div *ngIf="hero" class="name">{{ hero.name }}</div>
+</blockquote>
+
+<p>List of heroes</p>
+
+<ul>
+  <li *ngFor="let hero of heroes">{{ hero.name }}</li>
+</ul>
+
+<hr />
+
+<h2 id="ngIf">NgIf</h2>
+
+<p *ngIf="true">
+  Expression is true and ngIf is true. This paragraph is in the DOM.
+</p>
+<p *ngIf="false">
+  Expression is false and ngIf is false. This paragraph is not in the DOM.
+</p>
+
+<p [style.display]="'block'">
+  Expression sets display to "block". This paragraph is visible.
+</p>
+<p [style.display]="'none'">
+  Expression sets display to "none". This paragraph is hidden but still in the
+  DOM.
+</p>
+
+<h4>NgIf with template</h4>
+<p>&lt;ng-template&gt; element</p>
+<ng-template [ngIf]="hero">
+  <div class="name">{{ hero.name }}</div>
+</ng-template>
+
+<hr />
+
+<h2 id="ng-container">&lt;ng-container&gt;</h2>
+
+<h4>*ngIf with a &lt;ng-container&gt;</h4>
+
+<button (click)="hero = hero ? null : heroes[0]">Toggle hero</button>
+
+<p>
+  I turned the corner
+  <ng-container *ngIf="hero"> and saw {{ hero.name }}. I waved </ng-container>
+  and continued on my way.
+</p>
+<p>
+  I turned the corner
+  <span *ngIf="hero"> and saw {{ hero.name }}. I waved </span>
+  and continued on my way.
+</p>
+
+<p><i>&lt;select&gt; with &lt;span&gt;</i></p>
+<div>
+  Pick your favorite hero (<label
+    ><input type="checkbox" checked (change)="showSad = !showSad" />show
+    sad</label
+  >)
+</div>
+<select [(ngModel)]="hero">
+  <span *ngFor="let h of heroes">
+    <span *ngIf="showSad || h.emotion !== 'sad'">
+      <option [ngValue]="h">{{ h.name }} ({{ h.emotion }})</option>
+    </span>
+  </span>
+</select>
+
+<p><i>&lt;select&gt; with &lt;ng-container&gt;</i></p>
+<div>
+  Pick your favorite hero (<label
+    ><input type="checkbox" checked (change)="showSad = !showSad" />show
+    sad</label
+  >)
+</div>
+<select [(ngModel)]="hero">
+  <ng-container *ngFor="let h of heroes">
+    <ng-container *ngIf="showSad || h.emotion !== 'sad'">
+      <option [ngValue]="h">{{ h.name }} ({{ h.emotion }})</option>
+    </ng-container>
+  </ng-container>
+</select>
+<br /><br />
+
+<hr />
+
+<h2 id="ngFor">NgFor</h2>
+
+<div class="box">
+  <p class="code">
+    &lt;div *ngFor="let hero of heroes; let i=index; let odd=odd; trackBy:
+    trackById" [class.odd]="odd"&gt;
+  </p>
+  <div
+    *ngFor="
+      let hero of heroes;
+      let i = index;
+      let odd = odd;
+      trackBy: trackById"
+    [class.odd]="odd"
+  >
+    ({{ i }}) {{ hero.name }}
+  </div>
+
+  <p class="code">
+    &lt;ng-template ngFor let-hero [ngForOf]="heroes" let-i="index"
+    let-odd="odd" [ngForTrackBy]="trackById"/&gt;
+  </p>
+  <ng-template
+    ngFor
+    let-hero
+    [ngForOf]="heroes"
+    let-i="index"
+    let-odd="odd"
+    [ngForTrackBy]="trackById"
+  >
+    <div [class.odd]="odd">({{ i }}) {{ hero.name }}</div>
+  </ng-template>
+</div>
+<hr />
+
+<h2 id="ngSwitch">NgSwitch</h2>
+
+<div>Pick your favorite hero</div>
+<p>
+  <label *ngFor="let h of heroes">
+    <input type="radio" name="heroes" [(ngModel)]="hero" [value]="h" />{{
+      h.name
+    }}
+  </label>
+  <label
+    ><input type="radio" name="heroes" (click)="hero = null" />None of the
+    above</label
+  >
+</p>
+
+<h4>NgSwitch</h4>
+
+<div [ngSwitch]="hero?.emotion">
+  <app-happy-hero *ngSwitchCase="'happy'" [hero]="hero"></app-happy-hero>
+  <app-sad-hero *ngSwitchCase="'sad'" [hero]="hero"></app-sad-hero>
+  <app-confused-hero
+    *ngSwitchCase="'confused'"
+    [hero]="hero"
+  ></app-confused-hero>
+  <app-unknown-hero *ngSwitchDefault [hero]="hero"></app-unknown-hero>
+</div>
+
+<h4>NgSwitch with &lt;ng-template&gt;</h4>
+<div [ngSwitch]="hero?.emotion">
+  <ng-template [ngSwitchCase]="'happy'">
+    <app-happy-hero [hero]="hero"></app-happy-hero>
+  </ng-template>
+  <ng-template [ngSwitchCase]="'sad'">
+    <app-sad-hero [hero]="hero"></app-sad-hero>
+  </ng-template>
+  <ng-template [ngSwitchCase]="'confused'">
+    <app-confused-hero [hero]="hero"></app-confused-hero>
+  </ng-template>
+  <ng-template ngSwitchDefault>
+    <app-unknown-hero [hero]="hero"></app-unknown-hero>
+  </ng-template>
+</div>
+<hr />
+<!-- it is never displayed directly. In fact, before rendering the view, 
+  Angular replaces the <ng-template> and its contents with a comment. -->
+<p>Hip!</p>
+<ng-template>
+  <!-- <ng-template [ngIf]="true"> -->
+  <p>Hip!</p>
+</ng-template>
+<p>Hooray!</p>
+<hr />
+
+<li *ngFor="let hero of heroes">{{ hero.name }}</li>
+<hr />
+
+<div *ngIf="hero" class="name">{{ hero.name }}</div>
+<hr />
+
+<p>
+  I turned the corner
+  <span *ngIf="hero"> and saw {{ hero.name }}. I waved </span>
+  and continued on my way.
+</p>
+<hr />
+
+<div>
+  Pick your favorite hero (<label
+    ><input type="checkbox" checked (change)="showSad = !showSad" />show
+    sad</label
+  >)
+</div>
+
+<!-- Another problem: some HTML elements require all immediate children to be of a specific type. 
+  For example, the <select> element requires <option> children. You can't wrap the options in a conditional <div> or a <span>. -->
+<!-- The browser won't display an <option> within a <span>. -->
+<select [(ngModel)]="hero">
+  <span *ngFor="let h of heroes">
+    <span *ngIf="showSad || h.emotion !== 'sad'">
+      <!-- <option [ngValue]="h" *ngFor="let h of heroes">{{h.name}} ({{h.emotion}})</option> -->
+      <option [ngValue]="h">{{ h.name }} ({{ h.emotion }})</option>
+    </span>
+  </span>
+</select>
+
+<!-- The Angular <ng-container> is a grouping element that 
+  doesn't interfere with styles or layout because Angular doesn't put it in the DOM. -->
+
+<p>
+  I turned the corner
+  <ng-container *ngIf="hero"> and saw {{ hero.name }}. I waved </ng-container>
+  and continued on my way.
+</p>
+
+<div>
+  Pick your favorite hero (<label
+    ><input type="checkbox" checked (change)="showSad = !showSad" />show
+    sad</label
+  >)
+</div>
+<select [(ngModel)]="hero">
+  <ng-container *ngFor="let h of heroes">
+    <ng-container *ngIf="showSad || h.emotion !== 'sad'">
+      <option [ngValue]="h">{{ h.name }} ({{ h.emotion }})</option>
+    </ng-container>
+  </ng-container>
+</select>
+
+<!-- The <ng-container> is a syntax element recognized by the Angular parser. 
+        It's not a directive, component, class, or interface.
+        It's more like the curly braces in a JavaScript if-block:
+
+          content_copy
+          if (someCondition) {
+            statement1;
+            statement2;
+            statement3;
+          } -->
+<!-- NgIf displays the template content when the condition is true.
+            UnlessDirective displays the content when the condition is false. -->
+
+<p>
+  The currently condition is {{ condition }}
+  <button class="button-green" (click)="condition = !condition">
+    Toggle condition to {{ !condition }}
+  </button>
+</p>
+
+<p *appUnless="condition" class="unless a">
+  (A) This paragraph is displayed because the condition is false.
+</p>
+
+<p *appUnless="!condition" class="unless b">
+  (B) Although the condition is true, this paragraph is displayed because
+  appUnless is set to false.
+</p>
+
+<p *appUnless="condition">Show this sentence unless the condition is true.</p>

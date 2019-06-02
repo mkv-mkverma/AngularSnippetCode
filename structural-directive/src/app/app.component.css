@@ -1,0 +1,30 @@
+p span { color: red; font-size: 70%; }
+
+.unless {
+    border: 2px solid;
+    padding: 6px;
+  }
+   
+  p.unless {
+    width: 500px;
+  }
+   
+ .unless.a {
+    color: red;
+    border-color: gold;
+    background-color: yellow;
+    font-size: 100%;
+  }
+   
+.unless.b {
+    color: black;
+    border-color: green;
+    background-color: lightgreen;
+    font-size: 100%;
+  }
+  .button-green{
+      color: white;
+      background-color: rgb(6, 153, 37);
+      border-color: darkgreen;
+      border-radius: 10%
+  }
