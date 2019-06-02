@@ -1,6 +1,110 @@
 # AngularSnippetCode
 
-# TypeScript:
+ ## Angular interview questions
+https://www.geeksforgeeks.org/difference-between-typescript-and-javascript/
+https://www.geeksforgeeks.org/whats-the-difference-between-scripting-and-programming-languages/
+https://hackr.io/blog/angular-interview-questions
+
+ng-container and ng-template *ngtemplateoutlet='tempref' content={text:text}
+
+<ng-container *ngtemplateoutlet='tempref; context: { item: item }'></ng-container>
+
+<ng-template #tempref let-item="item">{{text}}<ng-template>
+
+https://stackoverflow.com/questions/52908844/what-are-practical-scenarios-of-ngtemplateoutlet-directive
+
+ng-content
+https://medium.com/@joshblf/wtf-is-ng-content-8382b2a664e1
+
+@component({
+	selector: 'app-button'
+	template: `<button (click)="add()">
+					<ng-content></ng-content>
+				</button>
+});
+export class child {
+	add(){
+		//Todo
+	}
+}
+
+parent.html
+
+<app-button>Add New</app-button>
+In the template for the reusable add button component we use the <ng-content></ng-content> tag as our placeholder for the button text. 
+This is telling Angular, “Hey, I don’t know what this is supposed to be right now but, I promise to tell you later”.
+
+
+DI is a coding pattern in which a class asks for dependencies (services or objects that a class needs to perform its function) 
+from external sources rather than creating them itself.
+
+@Injectable
+The injector is responsible for creating service instances and injecting them into classes.
+
+JIT - Compile TypeScript just in time for executing it.
+
+Compiled in the browser.
+Each file compiled separately.
+No need to build after changing your code and before reloading the browser page.
+Suitable for local development.
+AOT - Compile TypeScript during build phase.
+
+Compiled by the machine itself, via the command line (Faster).
+All code compiled together, inlining HTML/CSS in the scripts.
+No need to deploy the compiler (Half of Angular size).
+More secure, original source not disclosed.
+Suitable for production builds.
+
+
+## forms
+Template Driven Forms Features
+
+Easy to use
+Suitable for simple scenarios and fails for complex scenarios
+Similar to AngularJS
+Two way data binding(using [(NgModel)] syntax)
+Minimal component
+Automatic track of the form and its data(handled by Angular)
+Unit testing is another challenge
+Reactive Forms Features
+
+More flexible, but needs a lot of practice
+
+Handles any complex scenarios
+
+No data binding is done (immutable data model preferred by most developers)
+
+More component code and less HTML markup
+
+Reactive transformations can be made possible such as
+
+Handling a event based on a debounce time
+
+Handling events when the components are distinct until changed
+
+Adding elements dynamically
+
+Easier unit testing
+
+With the template driven approach you basically apply directives, such as ngModel, in your template. Based on these directives Angular will create formcontrol objects. This approach is good for building simple forms with basic validation (required, minlength, maxlength,...).
+
+With the reactive approach you basically need to create new instances of the formcontrols and formcontrolgroups in your component. Reactive forms are also the best choice for building more complex forms and are better in case you have the intention to implement unit testing for your forms.
+
+
+You should be aware that the getXxx() methods will be called every time change detection runs, 
+which can be quite often. Ensure that the getters return the same value (especially for objects the same instance) 
+and ensure the getters don't have side effects, otherwise you'll get "Expression has changed since it was last checked ..." errors.
+
+ng g s utils/services/dataShared --module=app.module
+
+## LocalStorage
+
+localStorage.removeItem('key');
+localStorage.getItem('key');
+localStorage.setItem('key',value);
+localStorage.clear();
+
+## TypeScript:
 
  
 
@@ -17,7 +121,7 @@ Intersections & union types: https://www.typescriptlang.org/docs/handbook/advanc
 Decorators: https://www.typescriptlang.org/docs/handbook/decorators.html
 
 
-# Angular:
+## Angular:
 
  
 Bootstrapping: https://angular.io/guide/bootstrapping
@@ -57,7 +161,7 @@ Unit Tesitng: https://medium.com/@selvarajchinnasamyks/angular-7-unit-testing-97
 Mock backend: https://jasonwatmore.com/post/2019/05/02/angular-7-mock-backend-example-for-backendless-development
      
 
-# NgRx:
+## NgRx:
 
  
 
